@@ -5,14 +5,18 @@ import { initialTasks } from "./data/data";
 import { taskReducer } from "./useReducers/taskReducers";
 
 const getNextId = (tasks) => {
-  const maxId = tasks.reduce((prev, current) =>
-    prev && prev.id > current.id ? prev.id : current.id
-  );
-  return maxId + 1;
+  if (tasks.length > 0) {
+    const maxId = tasks.reduce((prev, current) =>
+      prev && prev.id > current.id ? prev.id : current.id
+    );
+    return maxId + 1;
+  } else {
+    return 0;
+  }
 };
 
 const App = () => {
-  const [tasks, dispatch] = useReducer(taskReducer, initialTasks || []);
+  const [tasks, dispatch] = useReducer(taskReducer, initialTasks);
 
   // add task handler
   const handleAddTask = (text) => {
